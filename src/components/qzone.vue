@@ -107,7 +107,8 @@
   </body>
 </template>
 <script>
-
+  import { mapMutations } from 'vuex';
+  import Qzoneindex from "./qzoneindex";
   export default {
     name: "qzone",
     components:{Qzoneindex},
