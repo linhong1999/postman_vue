@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <!-- 在Vue 解析之前有 v-clock 避免节点延迟加载 -->
+    <h2 v-html="url"></h2>
+    <h2 v-text="msg">abc</h2> <!-- v-text 覆盖 -->
+    <p>{{msg}}</p>
+    <p v-pre>{{msg}}</p> <!-- v-pre 不解析 -->
+    <p v-once>{{msg}}</p>  <!-- v-once 不会再响应式 -->
+    <p>{{firstName + ' ' +  lastName}}</p>
+    <p>当前计数: {{counter * 2}}</p>
+<!--    <button v-on:click="counter++">+</button>-->
+<!--    <button v-on:click="counter&#45;&#45;">-</button>-->
+    <button v-on:click="increase">+</button>
+    <button @click="decrease">-</button>
+    <ul>
+        <li v-for="item in movies">{{item}}</li>
+    </ul>
+    <ul>
+        <!-- (k,v) in dict   {{v + k }} 是反着的-->
+        <li v-for="(index,stu) in movies">{{index + ' ' + stu}}</li>
+    </ul>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',  // 挂载
+        data: {
+            msg: 'hello world',
+            counter: 0,
+            firstName: 'kobe',
+            lastName: 'bryant',
+            // 响应式数据 可动态追加
+            // app.movies.push('海王')
+            movies: ['钢铁侠', '蝙蝠侠', '蜘蛛侠', '海贼王'],
+            students: [
+                {name: '林一',age: '20'},
+                {name: '林二',age: '21'},
+                {name: '林三',age: '22'},
+            ],
+            url: '<a herf="http://www.baidu.com">百度一下</a>'
+        },
+        methods: {
+            increase: function () {
+                this.counter++
+            },
+            decrease: function () {
+                this.counter--
+            }
+        }
+    })
+</script>
+</body>
+</html>

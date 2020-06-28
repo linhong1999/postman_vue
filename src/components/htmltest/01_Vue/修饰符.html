@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <!-- .stop 防止 btnClick 点击时 divClick 也被触发 -->
+  <div @click="divClick">
+    divClick
+    <button @click.stop="btnCLick">按钮</button>
+  </div>
+  <br>
+  <!-- .prevent 防止标签的默认操作 变成自定义操作 -->
+  <form action="baidu">
+    <input type="submit" value="提交" @click.prevent="submitClick">
+  </form>
+  <br>
+  <!-- 监听键盘输入 -->
+  <input type="text" @keyup.enter="keyUp">
+  <br>
+  <h2 v-if="isShow">v-if</h2>
+  <h2 v-else>v-else</h2>
+  <br>
+  <!-- 这里有个问题 当点击切换类型时 input 框的内容不会清空，即input 框被复用 -->
+  <!-- 解决: vue 有个虚拟dom的概念，会检查 节点的 key值 当key值不匹配时 则替换 -->
+  <span v-if="type==='username'">
+    <label>用户账户:</label>
+    <input placeholder="输入账号" key="username">
+  </span>
+  <span v-else>
+    <label>用户邮箱:</label>
+    <input placeholder="输入邮箱" key="email">
+  </span>
+  <button @click="switchType">切换类型</button>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+  let app = new Vue({
+    el: '#app',
+    data: {
+      isShow: true,
+      type: 'username'
+    },
+    methods: {
+      divClick() {
+        console.log("divClick")
+      },
+      btnCLick() {
+        console.log("btnCLick")
+      },
+      submitClick() {
+        console.log('submitClick')
+      },
+      keyUp() {
+        console.log('keyUp')
+      },
+      switchType() {
+        this.type = this.type === 'email' ? 'username' : 'email'
+      }
+    },
+    computed: {
+    }
+
+  })
+</script>
+</body>
+</html>

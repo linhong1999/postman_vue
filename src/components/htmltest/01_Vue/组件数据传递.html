@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn :cmsg="msg" :cmovies="movies"></cpn>
+  <child @itemclick="itemClick"></child>
+  <br>
+  <cpn1 :number1="num1" :number2="num2" ref="aaa"></cpn1>
+  <button @click="btnClick">按钮</button>
+</div>
+<template id="cpn">
+  <div>
+    <h2>{{cmsg}}</h2>
+    <h2>{{cmovies}}</h2>
+  </div>
+</template>
+<template id="cpn1">
+  <div>
+    <h2>{{bind_num1}}</h2>
+    <input type="text" v-model="bind_num1">
+    <h2>{{bind_num2}}</h2>
+    <input type="text" v-model="bind_num2">
+  </div>
+</template>
+<template id="child">
+  <div>
+    <button v-for="item in categories" @click="btn">{{item.name}}</button>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+
+  // 子组件向父组件传数据
+  // 子
+  let child = {
+    template: '#child',
+    data(){
+      return {
+        categories: [
+          {id: 'aaa', name: '林一'},
+          {id: 'bbb', name: '林二'}
+        ]
+      }
+    },
+    methods: {
+      btn(item){
+        // console.log(item)
+        // 父组件可以使用 props 把数据传给子组件。
+        // 子组件可以使用 $emit 触发父组件的自定义事件。
+        this.$emit('itemclick', item)
+      }
+    }
+  }
+
+
+  let cpn = {
+    template: '#cpn',
+    props: ['cmsg', 'cmovies'],
+    data() {
+      return {}
+    },
+    methods: {
+
+    }
+  }
+
+  let app = new Vue({
+    el: '#app',
+    data: {
+      msg: 'hello',
+      movies: ['林一' ,'林二', '林三'],
+      num1: 1,
+      num2: 0,
+    },
+    components: {
+      cpn,child,
+      cpn1: {
+        template: '#cpn1',
+        props: {
+          number1: Number,  // 类型
+          number2: Number,
+        },
+        data() {
+          return {  // 父子通信，双向绑定
+            bind_num1: this.number1,
+            bind_num2: this.number2
+          }
+        },
+        methods: {
+          showMsg(){
+            console.log(this.$parent.msg)  // 子访问父
+              console.log(this.$root.msg)  // 访问根组件
+            console.log('123')
+          }
+        }
+      }
+    },
+    methods: {
+      itemClick(item){
+        console.log(item)
+        // console.log('事件发生')
+      },
+      btnClick() {
+        // 调用子组件  父访问子
+        // console.log(this.$children)
+        this.$refs.aaa.showMsg()
+        // this.$children[2].showMsg()
+      }
+    },
+    computed: {
+    },
+
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn><button>按钮</button></cpn>
+  <cpn>
+    <p>哈哈哈</p>
+    <p>哈哈哈</p>
+  </cpn>
+  <cpn1>
+    <span slot="center">标题</span>
+  </cpn1>
+  <cpn2></cpn2>
+  <cpn2>
+    <!-- 名字任意 -->
+    <template slot-scope="slot">
+      <span v-for="item in slot.data">{{item}} -</span>
+    </template>
+  </cpn2>
+  <cpn2>
+    <!-- 名字任意 -->
+    <template slot-scope="slot">
+      <span>{{slot.data.join(' - ')}}</span>
+    </template>
+  </cpn2>
+
+</div>
+<template id="cpn">
+  <div>
+    <h2>我是组件1</h2>
+    <!-- 插槽 预留个空间 具备扩展性 -->
+    <slot></slot>
+  </div>
+</template>
+<template id="cpn1">
+  <div>
+    <h2>我是组件2</h2>
+    <!-- 插槽 预留个空间 具备扩展性 -->
+    <slot name="left">左边</slot>
+    <slot name="center">中间</slot>
+    <slot name="right">右边</slot>
+  </div>
+</template>
+<template id="cpn2">
+  <div>
+    <h2>我是组件2223</h2>
+    <slot :data="msgs">
+      <ul>
+        <li v-for="item in msgs">{{item}}</li>
+      </ul>
+    </slot>
+  </div>
+</template>
+<script src="../js/vue.js"></script>
+<script>
+  let app = new Vue({
+    el: '#app',
+    data: {
+      msg: 'hello'
+    },
+    methods: {
+    },
+    computed: {
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+      },
+      cpn1: {
+        template: '#cpn1',
+      },
+      cpn2: {
+        template: '#cpn2',
+        data() {
+          return {'msgs': [111, 222, 333, 44422],'sss':[11,333,44]}
+        },
+        created() {
+          this.msgs.join(' -')
+          this.sss.join(' -')
+        }
+      }
+    }
+
+  })
+</script>
+</body>
+</html>

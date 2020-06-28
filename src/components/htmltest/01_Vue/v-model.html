@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!-- v-model 双向绑定 -->
+<!--  <input type="text" :value="message" v-model="message">-->
+  <input type="text" :value="message" v-model.lazy="message">
+  <!-- v-model.lazy 延时绑定 回车之后才绑定 -->
+  <h2>{{message}}</h2>
+  <br>
+  <label for="agree">
+    <input type="checkbox" id="agree" v-model="isAgree"> 同意
+  </label>
+  <h2>你的选择是: {{isAgree}}</h2>
+  <button :disabled="!isAgree">下一步</button>
+  <br>
+  <select name="abc" v-model="fruit">
+    <option value="apple1">apple1</option>
+    <option value="apple2">apple2</option>
+    <option value="apple3">apple3</option>
+  </select>
+  <h2>你的选择是: {{fruit}}</h2>
+  <br>
+  <select name="abc" v-model="fruit" multiple>
+    <option value="apple1">apple1</option>
+    <option value="apple2">apple2</option>
+    <option value="apple3">apple3</option>
+  </select>
+  <h2>你的选择是: {{fruit}}</h2>
+  <br>
+  <label v-for="item in hobbies" :for="item">
+    <!-- 值绑定 -->
+    <input type="checkbox" :value="item" :id="item" v-model="hobbies">{{item}}
+  </label>
+  <h2>你的选择是: {{hobbies}}</h2>
+  <br>
+  <cpn></cpn>
+  <br>
+  <h2>父子组件</h2>
+  <cpn2></cpn2>
+  <h2>语法糖</h2>
+  <cpn3></cpn3>
+  <h2>组件模板分离写法</h2>
+  <mycpn1></mycpn1>
+  <mycpn2></mycpn2>
+</div>
+<script src="../js/vue.js"></script>
+<!-- 组件模板分离写法 script -->
+<script type="text/x-template" id="mycpn1">
+  <div>
+    <h2>我是组件模板分离写法1</h2>
+    <p>{{title}}</p>
+  </div>`
+</script>
+<!-- 组件模板分离写法 template -->
+<template id="mycpn2">
+  <div>
+    <h2>我是组件模板分离写法2</h2>
+  </div>`
+</template>
+<script>
+
+  // 1. 创建组件构造器对象
+  const cpn = Vue.extend({
+    // `` 反引号 换行不用加 +
+    template: `
+              <div>
+                <h2>我是标题</h2>
+                <p>我是内容</p>
+              </div>`
+  })
+  // 2. 注册组件 (全局组件)
+  // Vue.component('mycpn1', {
+  //   template: '#mycpn1'
+  // })
+
+  // 父子组件
+  const cpn1 = Vue.extend({
+    // `` 反引号 换行不用加 +
+    template: `
+              <div>
+                <h2>我是标题</h2>
+                <p>我是内容</p>
+              </div>`
+  })
+  const cpn2 = Vue.extend({
+    // `` 反引号 换行不用加 +
+    template: `
+              <div>
+                <h2>我是标题</h2>
+                <p>我是内容</p>
+              </div>
+              <cpn1></cpn1>
+    `,
+    components: {
+      cpn1: cpn1,
+    }
+  })
+
+  // 注册组件的 语法糖写法 直接
+  Vue.component('cpn3', {
+    template: `
+              <div>
+                <h2>我是标题</h2>
+                <p>我是内容</p>
+              </div>
+    `
+  })
+
+
+  let app = new Vue({
+    el: '#app',
+    data: {
+      message: 'hello world',
+      isAgree: false,
+      fruit: [],
+      hobbies:['林一', '林二', '林三', '林四',]
+    },
+    methods: {
+    },
+    computed: {
+    },
+    // 局部组件
+    components: {
+      cpn: cpn,
+      cpn2: cpn2,
+      // 模板分离写法
+      mycpn1:{
+        template: ('#mycpn1'),
+        data() {
+          return {
+            // 组件传数据
+            title: 'abc'
+          }
+        }
+      },
+      mycpn2:{
+        template: ('#mycpn2')
+      }
+    }
+
+  })
+</script>
+</body>
+</html>
