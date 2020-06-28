@@ -1,12 +1,14 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import router from './router'
 import axios from 'axios'
-import store from './store'
 import moment from 'moment'
 import $ from 'jquery'
+import App from './App'
+import router from './router'
+import store from './store'
+import { Uploader, RadioGroup, Radio, Image as VanImage } from 'vant';
+
 import 'bootstrap3/dist/css/bootstrap.min.css'
 import 'bootstrap3/dist/js/bootstrap.min'
 
@@ -14,6 +16,9 @@ Vue.config.productionTip = false;
 Vue.prototype.HOST = '/api';
 Vue.prototype.$axios = axios;
 Vue.prototype.$moment = moment;
+
+Vue.use(Uploader).use(RadioGroup).use(Radio).use(VanImage)
+
 
 const cpn = {
   template: `<div>我是组件 CPN</div>`,
@@ -37,22 +42,6 @@ new Vue({
   store
 }).$mount('#app');
 
-// axios.defaults.baseURL="http://localhost:8000"
-
-// axios.get('/api/pyqapi/v1/anno_pyq/').then(res=>{
-//   console.log(res)
-// }).catch(err=>{
-//   console.log(err)
-// })
-// axios({
-//   url: '/api/pyqapi/v1/anno_pyq/1/',
-//   // params: {
-//   //   'pk':1
-//   // }
-//   // method: 'get'
-// }).then(res=> {
-//   console.log(res)
-// })
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */

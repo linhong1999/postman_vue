@@ -63,9 +63,9 @@
                 token: 'jwt ' + this._res_data.token,
                 user_info: this._res_data.user_info
               });
-              this.$router.push({
-                path: 'qzone/' + this.loginData.username,
-              });
+              // this.$router.push({
+              //   path: 'qzone/' + this.loginData.username,
+              // });
             }).then(() =>{
               this.$axios({
                 method: 'get',
@@ -74,6 +74,7 @@
                 this.pyq_contents_getter({
                   pyq_contents_query: res.data
                 })
+                location.href = '/qzone/' + this.loginData.username
               });
               }).catch(error => {
               alert('账号或密码错误');

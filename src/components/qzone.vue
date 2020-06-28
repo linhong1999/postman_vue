@@ -35,8 +35,14 @@
                 <li>
                   <a href="javascript:;">
 <!--                    <img :src="require('/static' + $store.state.user_info.img)" class="avatar">-->
-                    <img :src="'/static' + $store.state.user_info.img" class="avatar">
-                    <span>{{username}}</span>
+                    <van-image
+                      round
+                      width="3rem"
+                      height="3rem"
+                      :src="'/static' + $store.state.user_info.img"
+                      fit="cover"
+                      style="bottom: 5px;"
+                    />
                   </a>
                 </li>
                 <li v-show="islogin">
@@ -120,12 +126,29 @@
         'comment_content': '',
         }
     },
-    methods:{
-
+    methods: {
+      ...mapMutations(['token_getter', 'pyq_contents_getter']),
+      logout() {
+        sessionStorage.removeItem('user_info');
+        sessionStorage.removeItem('Authorization');
+        this.islogin = false;
+        location.href = '/qzone/Anonymous'
+      },
+      data_getter() {
+        this.$axios({
+          method: 'get',
+          url: '/api/pyqapi/v1/anno_pyq/',
+        }).then(res => {
+          this.pyq_contents_getter({
+            pyq_contents_query: res.data
+          })
+        })
+      },
     },
     computed:{
     },
     created() {
+      this.data_getter();
       if(this.username != 'Anonymous'){
         this.islogin = true
       }else{
