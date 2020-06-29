@@ -6,6 +6,7 @@ import Router from 'vue-router'
 const login = ()=> import('../components/login');
 const register = ()=> import('../components/register');
 const qzone = ()=> import('../components/qzone');
+const dev_file = ()=> import('../components/dev_file');
 
 // 通过 Vue.use(插件)，安装插件
 Vue.use(Router);
@@ -33,6 +34,11 @@ export default new Router({
       path: '/qzone/:username',
       name: 'qzone',
       component: qzone,
+    },
+    {
+      path: '/dev',
+      name: 'dev',
+      component: dev_file,
     },
   ]
 })

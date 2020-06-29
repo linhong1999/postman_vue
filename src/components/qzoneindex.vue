@@ -30,6 +30,7 @@
                 width="5rem"
                 height="5rem"
                 :src="'/static/media/' + item.user_img"
+<!--                :src="'/media/' + item.user_img"-->
                 fit="cover"
                 />
               </div>
@@ -59,6 +60,7 @@
                           width="4rem"
                           height="4rem"
                           :src="'/static/media/' + item.user_img"
+<!--                          :src="'/media/' + comment_obj.user_img"-->
                           fit="cover"
                         />
                       </div>
@@ -114,6 +116,7 @@
         this.$axios({
           method: 'post',
           url: '/api/pyqapi/v1/pyq_operate/',
+          // url: '/pyqapi/v1/pyq_operate/',
           headers:{
             'Authorization': this.$store.state.Authorization
           },
@@ -125,6 +128,7 @@
           this.$axios({
             method: 'get',
             url: '/api/pyqapi/v1/anno_pyq/',
+            // url: '/pyqapi/v1/anno_pyq/',
           }).then(res => {
             this.pyq_contents_getter({
               pyq_contents_query: res.data
@@ -144,10 +148,12 @@
               'Authorization': this.$store.state.Authorization
             },
             'url': '/api/pyqapi/v1/comment_operate/' + pyq_obj_id + '/' + comment_obj_id
+            // 'url': '/pyqapi/v1/comment_operate/' + pyq_obj_id + '/' + comment_obj_id
           }).then(() => {
             this.$axios({
               method: 'get',
               url: '/api/pyqapi/v1/anno_pyq/',
+              // url: '/pyqapi/v1/anno_pyq/',
             }).then(res => {
               this.pyq_contents_getter({
                 pyq_contents_query: res.data
@@ -160,6 +166,7 @@
         this.$axios({
           method: 'post',
           url: '/api/pyqapi/v1/comment_operate/' + pyq_obj_id + '/',
+          // url: '/pyqapi/v1/comment_operate/' + pyq_obj_id + '/',
           headers:{
             'Authorization': this.$store.state.Authorization
           },
@@ -171,6 +178,7 @@
           this.$axios({
             method: 'get',
             url: '/api/pyqapi/v1/anno_pyq/',
+            // url: '/pyqapi/v1/anno_pyq/',
           }).then(res => {
             this.pyq_contents_getter({
               pyq_contents_query: res.data
@@ -192,6 +200,7 @@
         this.$axios({
           method: 'post',
           url: '/api/pyqapi/v1/pyq_operate/' + this.username + '/',
+          // url: '/pyqapi/v1/pyq_operate/' + this.username + '/',
           headers:{
             'Authorization': this.$store.state.Authorization
           },
@@ -200,11 +209,12 @@
           }
         }).catch(error =>{
           alert('login first')
-          location.href = '/login'
+          this.$router.push({name:'login'});
         }).then(() =>{
           this.$axios({
             method: 'get',
             url: '/api/pyqapi/v1/anno_pyq/',
+            // url: '/pyqapi/v1/anno_pyq/',
           }).then(res => {
             this.pyq_contents_getter({
               pyq_contents_query: res.data

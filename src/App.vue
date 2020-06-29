@@ -4,6 +4,7 @@
     <router-link :to="{name:'login'}"></router-link>
     <router-link :to="{name:'register'}"></router-link>
     <router-link :to="{name:'qzone'}"></router-link>
+    <router-link :to="{name:'dev'}"></router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -12,9 +13,10 @@
 import Login from "./components/login";
 import Register from "./components/register";
 import Qzone from "./components/qzone";
+import Dev from "./components/dev_file";
 export default {
   name: 'App',
-  components: {Qzone, Register, Login},
+  components: {Qzone, Register, Login, Dev},
   // data(){
   // },
   // methods: {

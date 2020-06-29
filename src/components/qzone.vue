@@ -40,6 +40,7 @@
                       width="3rem"
                       height="3rem"
                       :src="'/static' + $store.state.user_info.img"
+<!--                      :src="$store.state.user_info.img"-->
                       fit="cover"
                       style="bottom: 5px;"
                     />
@@ -88,8 +89,8 @@
                     <ul id="demo" class="collapse"> </ul>
                   </li>
                   <li>
-                    <a href="javascript:void(0);"> <i class="fa fa-ellipsis-h ">                            </i>
-                      <span>开发手册</span> <i class="fa fa-fw "></i> </a>
+                    <router-link :to="{name:'dev'}"> <i class="fa fa-ellipsis-h ">                            </i>
+                      <span>开发手册</span> <i class="fa fa-fw "></i> </router-link>
                     <ul id="demo" class="collapse"> </ul>
                   </li>
                   <li>
@@ -132,12 +133,12 @@
         sessionStorage.removeItem('user_info');
         sessionStorage.removeItem('Authorization');
         this.islogin = false;
-        location.href = '/qzone/Anonymous'
+        this.$router.push({path:'/qzone/Anonymous'})
       },
       data_getter() {
         this.$axios({
           method: 'get',
-          url: '/api/pyqapi/v1/anno_pyq/',
+          url: '/pyqapi/v1/anno_pyq/',
         }).then(res => {
           this.pyq_contents_getter({
             pyq_contents_query: res.data

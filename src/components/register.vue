@@ -115,8 +115,8 @@
           // register_info_data.append('img',this.file_list ? this.file_list[0].content:'')
           this.$axios({
             method: 'post',
-            // url: '/api/userapi/test_img_upload/',
             url: '/api/userapi/v1/register/',
+            // url: '/userapi/v1/register/',
             headers:{'Content-Type':'multipart/form-data'},
             data: register_info_data
             // data: {

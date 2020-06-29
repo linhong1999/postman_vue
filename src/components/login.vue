@@ -56,6 +56,7 @@
             this.$axios({
               method: 'post',
               url: '/api/userapi/v1/login/',
+              // url: '/userapi/v1/login/',
               data: this.loginData
             }).then(res =>{
               this._res_data= res.data;
@@ -70,11 +71,13 @@
               this.$axios({
                 method: 'get',
                 url: '/api/pyqapi/v1/anno_pyq/',
+                // url: '/pyqapi/v1/anno_pyq/',
               }).then(res => {
                 this.pyq_contents_getter({
                   pyq_contents_query: res.data
                 })
                 location.href = '/qzone/' + this.loginData.username
+                // this.$router.push() = '/qzone/' + this.loginData.username
               });
               }).catch(error => {
               alert('账号或密码错误');

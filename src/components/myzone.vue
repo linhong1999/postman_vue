@@ -13,6 +13,7 @@
           </li>
           <li v-for="(item,index) of value">
             <img :src="'/static/media/' + item.user_img" class="avatar"/>
+<!--            <img :src="'/media/' + item.user_img" class="avatar"/>-->
             {{item.username}} {{item.create_time}}
             <div class="king-timeline-item">
               <h3 class="king-timeline-header">
@@ -26,6 +27,7 @@
                 <li>
                   <div class="king-timeline-body">
                     <img :src="'/static/media/' + comment_obj.user_img" class="avatar"/>
+<!--                    <img :src="'/media/' + comment_obj.user_img" class="avatar"/>-->
                     {{comment_obj.username}} : {{comment_obj.comment}}
                     {{comment_obj.create_time}}
                   </div>
@@ -84,7 +86,7 @@
         sessionStorage.removeItem('user_info');
         sessionStorage.removeItem('Authorization');
         this.islogin = false;
-        location.href = '/qzone/Anonymous'
+        this.$router.push({path:'/qzone/Anonymous'})
         // this.$axios({
         //   method: 'post',
         //   url: '/api/userapi/v1/logout/',
@@ -114,7 +116,7 @@
           }
         }).catch(error =>{
           alert('login first')
-          location.href = '/login'
+          this.$router.push({name:'login'})
         }).then(() =>{
           this.$axios({
             method: 'get',
